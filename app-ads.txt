@@ -1,0 +1,4 @@
+# app-ads.txt — положить в корень сайта разработчика (https://<сайт>/app-ads.txt), указанного в Google Play и RuStore
+# Google AdMob
+google.com, pub-5270897766426472, DIRECT, f08c47fec0942fa0
+# Яндекс: добавь сюда строки из partner.yandex.ru (раздел app-ads.txt) после регистрации приложения

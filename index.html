@@ -1,0 +1,232 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Последний маяк — картонный роглайт про свет и Туман</title>
+<meta name="description" content="Последний маяк — уютный роглайт-экшен в картонном стиле. Держи свет маяка до рассвета и отстраивай свой остров.">
+<meta property="og:title" content="Последний маяк">
+<meta property="og:description" content="Держи свет маяка до рассвета: отбивайся от Тумана и отстраивай свой остров.">
+<meta property="og:image" content="img/banner.jpg">
+<link rel="icon" href="img/icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Balsamiq+Sans:wght@400;700&family=PT+Sans:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --kraft: #e9d8b8;
+    --kraft-deep: #d8c095;
+    --paper: #f7efe0;
+    --ink: #2b2219;
+    --ink-soft: #5e4e3e;
+    --night: #243566;
+    --night-deep: #18234a;
+    --lamp: #ffd98a;
+    --stripe: #c2382e;
+    --sea: #2e5e9a;
+    --edge: #3a2d20;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --kraft: #2a241c;
+      --kraft-deep: #221d16;
+      --paper: #342c22;
+      --ink: #f1e6d2;
+      --ink-soft: #c9b89c;
+      --edge: #120e0a;
+    }
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    background: var(--kraft);
+    background-image: radial-gradient(rgba(0,0,0,.035) 1px, transparent 1px);
+    background-size: 5px 5px;
+    color: var(--ink);
+    font: 18px/1.6 "PT Sans", system-ui, sans-serif;
+  }
+  h1, h2, h3, .btn, .tag { font-family: "Balsamiq Sans", "Comic Sans MS", system-ui, sans-serif; }
+  h1, h2, h3 { text-wrap: balance; line-height: 1.15; margin: 0; }
+  a { color: inherit; }
+  .wrap { max-width: 1080px; margin: 0 auto; padding-inline: 20px; }
+
+  /* ночное небо с маяком */
+  .hero {
+    position: relative;
+    background: radial-gradient(120% 90% at 75% 20%, #34488a 0%, var(--night) 45%, var(--night-deep) 100%);
+    color: #f6ecd6;
+    overflow: hidden;
+    padding-block: 56px 0;
+    border-bottom: 6px solid var(--edge);
+  }
+  .hero::before {
+    content: "";
+    position: absolute; inset: 0;
+    background-image:
+      radial-gradient(2px 2px at 12% 18%, #fff6d0 50%, transparent 51%),
+      radial-gradient(2px 2px at 28% 42%, #fff6d0 50%, transparent 51%),
+      radial-gradient(1.6px 1.6px at 46% 12%, #fff6d0 50%, transparent 51%),
+      radial-gradient(2px 2px at 64% 34%, #fff6d0 50%, transparent 51%),
+      radial-gradient(1.6px 1.6px at 86% 14%, #fff6d0 50%, transparent 51%),
+      radial-gradient(2px 2px at 92% 48%, #fff6d0 50%, transparent 51%);
+    opacity: .8;
+    pointer-events: none;
+  }
+  .hero-grid { position: relative; display: grid; grid-template-columns: 1.2fr .8fr; gap: 32px; align-items: end; }
+  .hero-text { padding-bottom: 64px; }
+  .brand { display: flex; align-items: center; gap: 14px; margin-bottom: 22px; }
+  .brand img { width: 64px; height: 64px; border-radius: 16px; border: 3px solid var(--edge); box-shadow: 0 4px 0 var(--edge); }
+  .brand span { font-family: "Balsamiq Sans", sans-serif; font-size: 1rem; letter-spacing: .06em; text-transform: uppercase; color: var(--lamp); }
+  .hero h1 { font-size: clamp(2.4rem, 6vw, 4.2rem); color: var(--lamp); text-shadow: 0 3px 0 var(--night-deep); }
+  .hero p.lead { font-size: 1.2rem; max-width: 34ch; margin: 14px 0 28px; color: #e8e0cc; }
+  .stores { display: flex; flex-wrap: wrap; gap: 12px; }
+  .btn {
+    display: inline-flex; align-items: center; gap: 10px;
+    padding: 14px 22px; border-radius: 14px;
+    background: var(--paper); color: var(--ink);
+    border: 3px solid var(--edge); box-shadow: 0 5px 0 var(--edge);
+    text-decoration: none; font-weight: 700; font-size: 1.05rem;
+    transition: transform .12s ease, box-shadow .12s ease;
+  }
+  .btn:hover { transform: translateY(2px); box-shadow: 0 3px 0 var(--edge); }
+  .btn.soon { opacity: .75; cursor: default; }
+  .btn.soon:hover { transform: none; box-shadow: 0 5px 0 var(--edge); }
+  .btn small { display: block; font-size: .72rem; font-weight: 400; color: var(--ink-soft); line-height: 1; }
+  .hero-shot { justify-self: center; position: relative; }
+  .hero-shot img {
+    display: block; width: min(300px, 62vw); max-width: 100%; height: auto; max-height: 560px; object-fit: cover; object-position: top;
+    border: 5px solid var(--edge); border-bottom: 0; border-radius: 28px 28px 0 0;
+    transform: rotate(2.5deg) translateY(10px);
+    box-shadow: -10px 0 0 rgba(0,0,0,.18);
+  }
+
+  /* разделы */
+  section { padding-block: 72px; }
+  .kicker { font-family: "Balsamiq Sans", sans-serif; text-transform: uppercase; letter-spacing: .1em; font-size: .85rem; color: var(--stripe); margin-bottom: 8px; }
+  h2 { font-size: clamp(1.8rem, 4vw, 2.6rem); margin-bottom: 14px; }
+  .intro { max-width: 62ch; color: var(--ink-soft); font-size: 1.1rem; }
+
+  .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 22px; margin-top: 36px; }
+  .card {
+    background: var(--paper);
+    border: 3px solid var(--edge); border-radius: 18px;
+    padding: 22px 22px 24px;
+    box-shadow: 0 6px 0 var(--edge);
+  }
+  .card:nth-child(odd) { transform: rotate(-.6deg); }
+  .card:nth-child(even) { transform: rotate(.5deg); }
+  .card h3 { font-size: 1.35rem; margin-bottom: 8px; }
+  .card p { margin: 0; color: var(--ink-soft); }
+  .tag { display: inline-block; font-size: .78rem; padding: 2px 10px; border-radius: 99px; background: var(--lamp); color: #3a2a10; border: 2px solid var(--edge); margin-bottom: 10px; }
+
+  .shots { display: flex; gap: 18px; overflow-x: auto; padding: 8px 4px 26px; scroll-snap-type: x mandatory; margin-top: 30px; }
+  .shots figure { margin: 0; flex: 0 0 auto; scroll-snap-align: start; text-align: center; }
+  .shots img { display: block; width: 300px; max-width: 78vw; height: auto; border-radius: 18px; border: 4px solid var(--edge); box-shadow: 0 6px 0 var(--edge); }
+  .shots figcaption { font-family: "Balsamiq Sans", sans-serif; font-size: .95rem; margin-top: 12px; color: var(--ink-soft); }
+
+  .daynight { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; margin-top: 34px; }
+  .panel { border-radius: 20px; padding: 26px; border: 3px solid var(--edge); box-shadow: 0 6px 0 var(--edge); }
+  .panel.night { background: var(--night); color: #efe5cf; }
+  .panel.day { background: #9fcf86; color: #1f2e16; }
+  .panel h3 { font-size: 1.5rem; margin-bottom: 10px; }
+  .panel ul { margin: 0; padding-left: 1.1em; }
+  .panel li { margin: 6px 0; }
+
+  footer { background: var(--edge); color: #e9dcc4; padding-block: 34px; font-size: .95rem; }
+  footer .row { display: flex; flex-wrap: wrap; gap: 14px 28px; justify-content: space-between; align-items: center; }
+  footer a { color: var(--lamp); }
+
+  @media (max-width: 900px) {
+    .hero-grid { grid-template-columns: 1fr; }
+    .hero-text { padding-bottom: 8px; }
+    .hero-shot img { width: min(260px, 70vw); max-height: 380px; }
+  }
+  @media (max-width: 760px) {
+    .daynight { grid-template-columns: 1fr; }
+    section { padding-block: 52px; }
+  }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap hero-grid">
+    <div class="hero-text">
+      <div class="brand"><img src="img/icon.png" alt="Иконка игры" width="64" height="64"><span>Роглайт · Android</span></div>
+      <h1>Последний маяк</h1>
+      <p class="lead">Шторм погасил последний маяк, и из Тумана выползли его порождения. Зажги огонь снова и продержись до рассвета.</p>
+      <div class="stores">
+        <!-- Когда игра выйдет: замени href="#" на ссылки из магазинов и убери класс soon -->
+        <a class="btn soon" href="#" aria-disabled="true">▶ Google Play <small>скоро</small></a>
+        <a class="btn soon" href="#" aria-disabled="true">◆ RuStore <small>скоро</small></a>
+      </div>
+    </div>
+    <div class="hero-shot"><img src="img/shot_battle.jpg" alt="Бой у маяка: герой в круге света" width="540" height="600"></div>
+  </div>
+</header>
+
+<main>
+  <section class="wrap">
+    <div class="kicker">Об игре</div>
+    <h2>Уютный роглайт из картона</h2>
+    <p class="intro">Ночью ты защищаешь свет маяка от тварей Тумана, днём отстраиваешь остров. Все герои, враги и дома словно вырезаны из картона, а музыка и звуки собраны специально для игры.</p>
+
+    <div class="daynight">
+      <div class="panel night">
+        <h3>🌙 Ночь — битва за свет</h3>
+        <ul>
+          <li>Ведёшь героя одним пальцем, а стреляет он сам.</li>
+          <li>Свет маяка лечит и ослабляет врагов, но сжимается с каждой минутой.</li>
+          <li>Искры элиты раздвигают тьму, если донести их до маяка.</li>
+          <li>Четыре босса: Левиафан, Капитан-утопленник, Ледяной кракен и Мать Тумана.</li>
+        </ul>
+      </div>
+      <div class="panel day">
+        <h3>☀️ День — твой остров</h3>
+        <ul>
+          <li>Кузница, причал, склад, мастерская, таверна и обсерватория.</li>
+          <li>Пять героев: у каждого своё оружие и навык.</li>
+          <li>Снаряжение, экспедиции, просьбы жителей.</li>
+          <li>Ежедневные задания и испытание недели.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="wrap">
+    <div class="kicker">Скриншоты</div>
+    <h2>Как это выглядит</h2>
+    <div class="shots">
+      <figure><img src="img/shot_jackpot.jpg" alt="Слот-машина улучшений с легендарной картой" width="540" height="600" loading="lazy"><figcaption>Слот-машина улучшений</figcaption></figure>
+      <figure><img src="img/shot_island.jpg" alt="Остров с деревней и маяком" width="540" height="600" loading="lazy"><figcaption>Остров днём</figcaption></figure>
+      <figure><img src="img/shot_horde.jpg" alt="Орда врагов у края света" width="540" height="600" loading="lazy"><figcaption>Испытание недели</figcaption></figure>
+      <figure><img src="img/shot_boss.jpg" alt="Битва с Матерью Тумана" width="540" height="600" loading="lazy"><figcaption>Мать Тумана</figcaption></figure>
+      <figure><img src="img/shot_heroes.jpg" alt="Экран героев" width="540" height="600" loading="lazy"><figcaption>Герои</figcaption></figure>
+    </div>
+  </section>
+
+  <section class="wrap">
+    <div class="kicker">Оружие</div>
+    <h2>Собери свою сборку</h2>
+    <p class="intro">Каждый новый уровень крутит три барабана слот-машины. Совмещай оружие и пассивки, чтобы получить эволюции.</p>
+    <div class="cards">
+      <div class="card"><span class="tag">Смотритель</span><h3>Гарпун</h3><p>Пробивает несколько врагов подряд. Эволюция тянет их к тебе.</p></div>
+      <div class="card"><span class="tag">Рыбачка</span><h3>Якорь-бумеранг</h3><p>Описывает дугу и возвращается, сметая толпу.</p></div>
+      <div class="card"><span class="tag">Механик</span><h3>Турели</h3><p>Сами поворачиваются к цели и бьют болтами.</p></div>
+      <div class="card"><span class="tag">Монахиня</span><h3>Святой свет</h3><p>Волны света ранят тварей и лечат героиню.</p></div>
+      <div class="card"><span class="tag">Контрабандист</span><h3>Динамит</h3><p>Шипит фитилём и разносит всё вокруг.</p></div>
+      <div class="card"><span class="tag">Любой герой</span><h3>Молния и чайки</h3><p>Цепная молния, зажигательные бутылки, чайки-дроны, прожектор.</p></div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap row">
+    <div>© 2026 «Последний маяк» · Adullin Games · <a href="mailto:relmasterdk@gmail.com">relmasterdk@gmail.com</a></div>
+    <div><a href="privacy.html">Политика конфиденциальности</a> · Звуки: Kenney.nl (CC0)</div>
+  </div>
+</footer>
+
+</body>
+</html>
